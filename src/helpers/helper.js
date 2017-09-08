@@ -20,24 +20,31 @@ var helper = {
     }
   },
 
-  getFullDeliveryUrls: (params, projectID, previewKey, isPreview) => {
+  getFullDeliveryUrls: (params, projectID, previewKey, isPreview, bypassCache) => {
     var options = [];
+    var headers = {};
+
+    if (bypassCache === true)
+    {
+        headers['X-KC-Wait-For-Loading-New-Content'] = 'true';
+    }
 
     if (isPreview && previewKey !== null) {
+      headers['Authorization'] = 'Bearer ' + previewKey;
+
       params.forEach((item) => {
         options.push({
           uri: helper.getDeliveryUrl(projectID, isPreview) + item,
           json: true,
-          headers: {
-            Authorization: 'Bearer ' + previewKey
-          }
+          headers: headers
         });
       });
     } else {
       params.forEach((item) => {
         options.push({
           uri: helper.getDeliveryUrl(projectID, isPreview) + item,
-          json: true
+          json: true,
+          headers: headers
         });
       });
     }

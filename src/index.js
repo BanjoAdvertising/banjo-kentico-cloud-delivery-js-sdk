@@ -28,6 +28,7 @@ class Delivery {
  * @method getContent
  * @param {(object|array)} params Object or array that contains filtering url parameters that are used for requesting Kentico Cloud storage. Object properties are names for categories. In case array is passed the response must be processed with use of the categorizeContent method. See details about filtering url parameters: https://developer.kenticocloud.com/v1/reference#delivery-api
  * @param {boolean} isPreview Flag that controls whether only published or all items should be requested.
+ * @param {boolean} bypassCache Flag to bypass Kentico Cloud cache to ensure latest version is returned.  
  * @return {promise} with object of responses for each passed parameter from the Kentico Cloud storage.
  * @example
  * // returns
@@ -38,9 +39,9 @@ class Delivery {
  * project.getContent({
  *   home: '?system.type=homepage',
  *   nav: '?system.type=navigation'
- * }, true)
+ * }, true, false)
  */
-Delivery.prototype.getContent = function (params, isPreview) {
+Delivery.prototype.getContent = function (params, isPreview, bypassCache) {
 
   if (typeof params === 'undefined') {
     Promise.reject('Plase, specify the params parameter in the getContent method.');
@@ -63,7 +64,7 @@ Delivery.prototype.getContent = function (params, isPreview) {
   }
 
   var that = this,
-      options = helpers.getFullDeliveryUrls(params, this.projectID, this.previewKey, isPreview);
+      options = helpers.getFullDeliveryUrls(params, this.projectID, this.previewKey, isPreview, bypassCache);
 
   return helpers.getRawData(options)
   .then(function (data) {
