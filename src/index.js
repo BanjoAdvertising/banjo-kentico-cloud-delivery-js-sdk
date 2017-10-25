@@ -232,16 +232,35 @@ Delivery.prototype.getValues = (content, config) => {
 Delivery.prototype.resolveModularContentInRichText = (content, categoryName, elementName, modularContentCodeName, template) => {
   var richTextContent = '';
 
+  var cat = content[categoryName];
+
+  if (cat == null) {
+    return;
+  }
+
   content[categoryName].items.forEach((item, index) => {
+    if (!item || !item.elements) {
+      return;
+    }
+
     if (typeof item.elements[elementName] !== 'undefined') {
       var $ = cheerio.load(item.elements[elementName]);
-      var $object = $('object[data-codename="' + modularContentCodeName + '"]')
-      var codename = $object.attr('data-codename');
-      var data = JSON.parse($object.next('script#' + codename).html());
+      var $object = $('object');
 
+      console.log('object result ', $object);
+
+      var $script = $object.next('script');
+
+      var data = JSON.parse($script.html());
+      
       var regex = /\{([^}]+)\}/gi;
       var result = [];
       var indices = [];
+
+      // confirm that specified type matches requested type
+      if (data.system.type !== modularContentCodeName) {
+        return;
+      }
 
       while ((result = regex.exec(template)) ) {
         indices.push(result);
@@ -249,10 +268,11 @@ Delivery.prototype.resolveModularContentInRichText = (content, categoryName, ele
         var objectProperies = result[1].split('.');
 
         var tempData = data;
-        objectProperies.forEach((itemProperties, indexProperties) => {
-          tempData = tempData[itemProperties];
-        });
-
+        if (objectProperies) {
+          objectProperies.forEach((itemProperties, indexProperties) => {
+              tempData = tempData[itemProperties];
+          });
+        }
 
         var resolvedString = '';
         if (objectProperies[0] === 'elements') {
@@ -264,7 +284,8 @@ Delivery.prototype.resolveModularContentInRichText = (content, categoryName, ele
         template = template.replace(result[0], resolvedString);
       }
 
-      $object.next('script#' + codename).remove();
+      $script.remove();
+
       $object.replaceWith(template);
       item.elements[elementName] = $.html().replace('<html><head></head><body>', '').replace('</body></html>', '');
     }

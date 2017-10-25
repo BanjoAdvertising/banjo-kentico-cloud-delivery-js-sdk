@@ -14,9 +14,9 @@ var helper = {
 
   getDeliveryUrl: (projectID, isPreview) => {
     if (isPreview) {
-      return 'https://preview-deliver.kenticocloud.com/' + projectID + '/items';
+      return 'https://preview--deliver-kenticocloud-com-bzh9f66ohjth.runscope.net/' + projectID + '/items';
     } else {
-      return 'https://deliver.kenticocloud.com/' + projectID + '/items';
+      return 'https://deliver-kenticocloud-com-bzh9f66ohjth.runscope.net/' + projectID + '/items';
     }
   },
 
