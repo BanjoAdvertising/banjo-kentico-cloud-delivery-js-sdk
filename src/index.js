@@ -245,48 +245,54 @@ Delivery.prototype.resolveModularContentInRichText = (content, categoryName, ele
 
     if (typeof item.elements[elementName] !== 'undefined') {
       var $ = cheerio.load(item.elements[elementName]);
-      var $object = $('object');
 
-      console.log('object result ', $object);
+      $('object').each((oindex, elem) => {
 
-      var $script = $object.next('script');
+        var $object = $(elem);
 
-      var data = JSON.parse($script.html());
-      
-      var regex = /\{([^}]+)\}/gi;
-      var result = [];
-      var indices = [];
+        var codename = $object.attr('data-codename');
 
-      // confirm that specified type matches requested type
-      if (data.system.type !== modularContentCodeName) {
-        return;
-      }
+        var $script = $object.next('script#' + codename);
 
-      while ((result = regex.exec(template)) ) {
-        indices.push(result);
+        var data = JSON.parse($script.html());
+        
+        var regex = /\{([^}]+)\}/gi;
+        var result = [];
+        var indices = [];
+        var resolvedContent = '';
 
-        var objectProperies = result[1].split('.');
-
-        var tempData = data;
-        if (objectProperies) {
-          objectProperies.forEach((itemProperties, indexProperties) => {
-              tempData = tempData[itemProperties];
-          });
+        // confirm that specified type matches requested type
+        if (data.system.type !== modularContentCodeName) {
+          return;
         }
 
-        var resolvedString = '';
-        if (objectProperies[0] === 'elements') {
-          resolvedString = tempData.value;
-        } else {
-          resolvedString = tempData;
+        while ((result = regex.exec(template)) ) {
+          indices.push(result);
+
+          var objectProperies = result[1].split('.');
+
+          var tempData = data;
+          if (objectProperies) {
+            objectProperies.forEach((itemProperties, indexProperties) => {
+                tempData = tempData[itemProperties];
+            });
+          }
+
+          var resolvedString = '';
+          if (objectProperies[0] === 'elements') {
+            resolvedString = tempData.value;
+          } else {
+            resolvedString = tempData;
+          }
+
+          resolvedContent = template.replace(result[0], resolvedString);
         }
 
-        template = template.replace(result[0], resolvedString);
-      }
+        $script.remove();
 
-      $script.remove();
+        $object.replaceWith(resolvedContent);
+      });
 
-      $object.replaceWith(template);
       item.elements[elementName] = $.html().replace('<html><head></head><body>', '').replace('</body></html>', '');
     }
   });
