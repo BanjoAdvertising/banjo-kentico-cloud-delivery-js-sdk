@@ -1,6 +1,6 @@
 {
   "name": "ma-kentico-cloud-delivery-js-sdk",
-  "version": "0.2.0-alpha.3",
+  "version": "0.2.0",
   "description": "Unofficial SDK for the Kentico Cloud Delivery API",
   "main": "src/index.js",
   "scripts": {
