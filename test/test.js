@@ -131,7 +131,7 @@ describe('Delivery', function() {
 
   describe('#resolveModularContentInRichText', function() {
     var data = project.getValues(testObject);
-    data = project.resolveModularContentInRichText(data, 'testItemsParent', 'rich_text', 'rich_text_modular_item', '<span class="resolved">{elements.text}</span>')
+    data = project.resolveModularContentInRichText(data, 'testItemsParent', 'rich_text', 'automated_test_item', '<span class="resolved">{elements.text}</span>')
 
     it('should return resolver rich_text with string "<span class="resolved">Morbi scelerisque luctus velit.</span>"', function() {
       expect(data.testItemsParent.items[0].elements.rich_text).to.have.string('<span class="resolved">Morbi scelerisque luctus velit.</span>');
