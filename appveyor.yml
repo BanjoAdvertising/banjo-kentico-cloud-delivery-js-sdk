@@ -5,7 +5,7 @@ cache:
   - node_modules -> package.json
 
 environment:
-  - NODE_ENV: development
+  NODE_ENV: development
 
 before_build:
   - npm install
