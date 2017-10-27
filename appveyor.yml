@@ -4,15 +4,16 @@ skip_tags: true
 cache:
   - node_modules -> package.json
 
+environment:
+  nodejs_version: "6"
+
 # WHYYYYYYYY
-#environment:
 #  NODE_ENV: development
 
 install:
   - Install-Product node 8
   - npm install
-  - npm install mocha -g
-  - npm install gulp -g
+  - npm install --only=dev # install dev deps seperately as i cant make appveyor set nodeenv to development
 
 build_script:
   - npm run lint
