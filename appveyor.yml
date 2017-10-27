@@ -4,14 +4,16 @@ skip_tags: true
 cache:
   - node_modules -> package.json
 
-environment:
-  NODE_ENV: development
+#environment:
+#  NODE_ENV: development
 
 before_build:
   - npm install
+  - npm install mocha -g
+  - npm install gulp -g
 
 build_script:
-  - npm lint
+  - npm run lint
 
 test_script:
-  - npm test
+  - npm run test
