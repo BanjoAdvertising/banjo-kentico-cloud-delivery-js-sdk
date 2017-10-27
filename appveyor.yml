@@ -1,5 +1,13 @@
+
+skip_tags: true
+
+cache:
+  - node_modules -> package.json
+
 before_build:
   - npm install
 
-test:
+build: off
+
+test_script:
   - npm test
