@@ -1,5 +1,7 @@
 # Delivery SDK for Javascript
 
+[![Build status](https://ci.appveyor.com/api/projects/status/kw551lngkm5bmgiy?svg=true)](https://ci.appveyor.com/project/BanjoDigital/banjo-kentico-cloud-delivery-js-sdk)
+
 ## Notification
 
 This is an unofficial SDK for the Kentico Cloud Delivery API. The SDK is currently under development, it is not fully tested and might change without guarantee of backward compatibility.

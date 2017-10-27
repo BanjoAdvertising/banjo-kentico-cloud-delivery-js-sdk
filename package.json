@@ -1,14 +1,14 @@
 {
-  "name": "ma-kentico-cloud-delivery-js-sdk",
-  "version": "0.2.0",
-  "description": "Unofficial SDK for the Kentico Cloud Delivery API",
+  "name": "banjo-kentico-cloud-delivery-js-sdk",
+  "version": "0.1.0",
+  "description": "Fork of Unofficial SDK for the Kentico Cloud Delivery API.",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MilanLund/kentico-cloud-delivery-js-sdk.git"
+    "url": "git+BanjoAdvertising/banjo-kentico-cloud-delivery-js-sdk.git"
   },
   "keywords": [
     "Delivery",
@@ -20,9 +20,9 @@
   "author": "Milan Lund <hello@milanlund.com> (http://www.milanlund.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MilanLund/kentico-cloud-delivery-js-sdk/issues"
+    "url": "https://github.com/BanjoAdvertising/banjo-kentico-cloud-delivery-js-sdk/issues"
   },
-  "homepage": "https://github.com/MilanLund/kentico-cloud-delivery-js-sdk#readme",
+  "homepage": "https://github.com/BanjoAdvertising/banjo-kentico-cloud-delivery-js-sdk#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
     "cheerio": "^1.0.0-rc.2",
